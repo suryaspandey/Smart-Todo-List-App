@@ -10,14 +10,16 @@ import { REQUIRED_FIELD } from "../constants";
 import { useTask } from "@/store/useTaskStore";
 import { toast } from "sonner";
 
-export const TaskForm = ({ open, onClose }: any) => {
-  const { createTask } = useTask();
+export const TaskForm = ({ open, onClose, taskData }: any) => {
+  const { createTask, updateTask } = useTask();
+
+  const isEdit = !!taskData;
 
   const createTaskForm = useFormik({
     initialValues: {
-      title: "",
-      description: "",
-      deadline: "",
+      title: taskData?.title || "",
+      description: taskData?.description || "",
+      deadline: taskData?.deadline || "",
     },
     validationSchema: Yup.object({
       title: Yup.string().required(REQUIRED_FIELD),
@@ -25,13 +27,19 @@ export const TaskForm = ({ open, onClose }: any) => {
       deadline: Yup.string().required(REQUIRED_FIELD),
     }),
     onSubmit: async (values, { resetForm }) => {
-      console.log(values);
       try {
-        await createTask({
-          ...values,
-          isCompleted: false,
-        });
-        toast.success("Task created successfully");
+        if (isEdit) {
+          await updateTask(taskData.id, {
+            ...values,
+            isCompleted: taskData?.isCompleted ? true : false,
+          });
+        } else {
+          await createTask({
+            ...values,
+            isCompleted: false,
+          });
+          toast.success("Task created successfully");
+        }
         resetForm();
         onClose();
       } catch (error: string) {
@@ -41,7 +49,7 @@ export const TaskForm = ({ open, onClose }: any) => {
   });
 
   const { values, handleBlur, touched, errors, handleChange } = createTaskForm;
-  
+
   return (
     <>
       <Dialog open={open} onOpenChange={onClose}>
@@ -100,7 +108,9 @@ export const TaskForm = ({ open, onClose }: any) => {
               </div>
 
               <div className="flex justify-end">
-                <Button type="submit">Create Task</Button>
+                <Button type="submit">
+                  {isEdit ? "Edit Task" : "Create Task"}
+                </Button>
               </div>
             </Form>
           </FormikProvider>

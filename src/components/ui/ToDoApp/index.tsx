@@ -7,6 +7,7 @@ import {
   Filter,
   Plus,
   Search,
+  XCircle,
 } from "lucide-react";
 import { SelectValue } from "@radix-ui/react-select";
 import { Select, SelectContent, SelectItem, SelectTrigger } from "../select";
@@ -21,6 +22,7 @@ export const ToDoApp = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [filterStatus, setFilterStatus] = useState("all");
   const [refreshFlag, setRefreshFlag] = useState(false);
+  const [editingTask, setEditingTask] = useState(null);
 
   const { loading, tasks } = useTask();
 
@@ -33,7 +35,7 @@ export const ToDoApp = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setRefreshFlag((prev) => !prev);
-    }, 60000);
+    }, 30000);
 
     return () => clearInterval(interval);
   }, []);
@@ -41,6 +43,21 @@ export const ToDoApp = () => {
   useEffect(() => {
     //
   }, [refreshFlag]);
+
+  //   useEffect(() => {
+  //     const newlyOverdueTask = tasks.filter(
+  //       (task) => !task.isCompleted && new Date(task.deadline) <= new Date()
+  //     );
+
+  //     if (newlyOverdueTask.length > 0) {
+  //       toast.error(`You have ${newlyOverdueTask.length} task(s) overdue`);
+  //     }
+  //   }, [tasks]);
+
+  const editTask = (task) => {
+    setEditingTask(task);
+    setShowForm(true);
+  };
 
   const categorizedTasks = useMemo(() => {
     return {
@@ -52,7 +69,7 @@ export const ToDoApp = () => {
         (task) => !task.isCompleted && new Date(task.deadline) <= new Date()
       ),
     };
-  }, [tasks]);
+  }, [tasks, refreshFlag]);
 
   const filteredTasks = tasks.filter((task) => {
     const matchesSearch =
@@ -67,16 +84,6 @@ export const ToDoApp = () => {
 
     return matchesSearch && (filterStatus === "all" || filterStatus === status);
   });
-
-  useEffect(() => {
-    const newlyOverdueTask = tasks.filter(
-      (task) => !task.isCompleted && new Date(task.deadline) <= new Date()
-    );
-
-    if (newlyOverdueTask.length > 0) {
-      toast.error(`You have ${newlyOverdueTask.length} task(s) overdue`);
-    }
-  }, [tasks, refreshFlag]);
 
   const columns = [
     {
@@ -176,7 +183,7 @@ export const ToDoApp = () => {
                 placeholder="Search tasks by title or description..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 h-12 text-lg border-2 border-gray-200 focus:border-indigo-500"
+                className="pl-10 h-12 text-lg border-2 border-gray-200 focus:border-indigo-500 relative"
               />
             </div>
             <Select
@@ -194,16 +201,27 @@ export const ToDoApp = () => {
                 <SelectItem value="failure">Overdue</SelectItem>
               </SelectContent>
             </Select>
+            <XCircle
+              className="w-5 h-5 mr-2 text-gray-600 cursor-pointer absolute right-80 top-77"
+              onClick={() => {
+                setSearchQuery("");
+                setFilterStatus("all");
+              }}
+            />
           </div>
         </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 py-6">
         {showForm && (
-          <TaskForm open={showForm} onClose={() => setShowForm(false)} />
+          <TaskForm
+            open={showForm}
+            onClose={() => setShowForm(false)}
+            taskData={editingTask}
+          />
         )}
 
-        {filterStatus === "all" ? (
+        {filterStatus === "all" && searchQuery.trim() === "" ? (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {columns.map((column) => (
               <div
@@ -226,7 +244,7 @@ export const ToDoApp = () => {
                   </div>
                 </div>
 
-                <div className="p-4 space-y-4">
+                <div className="p-4 space-y-4 h-[600px] flex flex-col">
                   {column.tasks.length === 0 ? (
                     <div className="text-center py-12 text-gray-500">
                       <div className="text-6xl mb-4">
@@ -249,16 +267,23 @@ export const ToDoApp = () => {
                       </p>
                     </div>
                   ) : (
-                    column.tasks.map((task) => (
-                      <TaskCard key={task.id} task={task} status={column.key} />
-                    ))
+                    <div className="overflow-y-auto space-y-4">
+                      {column.tasks.map((task) => (
+                        <TaskCard
+                          key={task.id}
+                          task={task}
+                          status={column.key}
+                          onEdit={(task) => editTask(task)}
+                        />
+                      ))}
+                    </div>
                   )}
                 </div>
               </div>
             ))}
           </div>
         ) : (
-          <div className="bg-white rounded-xl shadow-lg p-6">
+          <div className="bg-white rounded-xl shadow-lg p-6 h-[600px] flex flex-col">
             <div className="flex items-center space-x-3 mb-6">
               <Filter className="w-6 h-6 text-gray-700" />
               <h2 className="text-2xl font-bold text-gray-800">
@@ -275,14 +300,21 @@ export const ToDoApp = () => {
                 </p>
               </div>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 overflow-y-auto">
                 {filteredTasks.map((task) => {
                   const status = task.isCompleted
                     ? "success"
                     : new Date(task.deadline) <= new Date()
                     ? "failure"
                     : "ongoing";
-                  return <TaskCard key={task.id} task={task} status={status} />;
+                  return (
+                    <TaskCard
+                      key={task.id}
+                      task={task}
+                      status={status}
+                      onEdit={(task) => editTask(task)}
+                    />
+                  );
                 })}
               </div>
             )}

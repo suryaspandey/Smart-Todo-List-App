@@ -21,7 +21,15 @@ import {
 import { formatDistanceToNow, isPast, format } from "date-fns";
 import { useTask } from "@/store/useTaskStore";
 
-export const TaskCard = ({ task, status }: { task: any; status: string }) => {
+export const TaskCard = ({
+  task,
+  status,
+  onEdit,
+}: {
+  task: any;
+  status: string;
+  onEdit: any;
+}) => {
   const { deleteTask, updateTask } = useTask();
 
   const [timeLeft, setTimeLeft] = useState("");
@@ -100,19 +108,16 @@ export const TaskCard = ({ task, status }: { task: any; status: string }) => {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="bg-white">
-            {status === "ongoing" ? (
-              <DropdownMenuItem
-              // onClick={() => onEdit(task)}
-              >
-                <Pencil className="w-4 h-4 mr-2" />
-                Edit
-              </DropdownMenuItem>
-            ) : (
+            {status !== "ongoing" && (
               <DropdownMenuItem onClick={handleToggleComplete}>
                 <CheckCircle2 className="w-4 h-4 mr-2" />
                 {task.isCompleted ? "Mark Incomplete" : "Mark Complete"}
               </DropdownMenuItem>
             )}
+            <DropdownMenuItem onClick={() => onEdit(task)}>
+              <Pencil className="w-4 h-4 mr-2" />
+              Edit
+            </DropdownMenuItem>
             <DropdownMenuItem
               onClick={handleDelete}
               className="text-red-600 hover:text-red-700 hover:bg-red-50"
