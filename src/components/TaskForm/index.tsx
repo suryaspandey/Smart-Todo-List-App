@@ -3,11 +3,18 @@ import * as Yup from "yup";
 import { useTask } from "@/store/useTaskStore";
 import { toast } from "sonner";
 import { REQUIRED_FIELD } from "../ui/ToDoApp/constants";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "../ui/dialog";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
+import { X } from "lucide-react";
 
 export const TaskForm = ({ open, onClose, taskData }: any) => {
   const { createTask, updateTask } = useTask();
@@ -55,6 +62,15 @@ export const TaskForm = ({ open, onClose, taskData }: any) => {
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Create a New Task</DialogTitle>
+            <DialogClose asChild>
+              <Button
+                type="button"
+                className="absolute right-4 top-4 text-gray-200 bg-white dark:bg-black dark:hover:bg-white dark:text-white dark:hover:text-black"
+              >
+                <span className="sr-only">Close</span>
+                <X />
+              </Button>
+            </DialogClose>
           </DialogHeader>
           <FormikProvider value={createTaskForm}>
             <Form className="space-y-4 mt-4">
@@ -107,7 +123,7 @@ export const TaskForm = ({ open, onClose, taskData }: any) => {
               </div>
 
               <div className="flex justify-end">
-                <Button type="submit">
+                <Button type="submit" className="cursor-pointer">
                   {isEdit ? "Edit Task" : "Create Task"}
                 </Button>
               </div>

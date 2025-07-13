@@ -5,23 +5,24 @@ import {
   AccordionTrigger,
 } from "../accordion";
 import TaskCard from "../TaskCard";
+import { EMPTY_STATE_CONTENT } from "../ToDoApp/constants";
 
-export const MobileViewCard = ({ columns, onEdit }) => {
+export const MobileViewCard = ({ statusCardSection, onEdit }: any) => {
   return (
     <>
       <Accordion type="multiple" className="space-y-4">
-        {columns.map((col) => {
+        {statusCardSection.map((col) => {
           return (
             <AccordionItem
               key={col.key}
-              className="bg-white rounded-lg shadow-lg border-0 overflow-hidden"
+              className="bg-white dark:bg-zinc-900 rounded-lg shadow-lg border-0 overflow-hidden"
               value={col.key}
             >
               <AccordionTrigger className={`px-6 py-4 border-t-4 ${col.color}`}>
-                <div className="flex items-center justify-between w-full mr-4">
+                <div className="flex items-center justify-between w-full mr-1">
                   <div className="flex items-center space-x-3">
-                    <col.icon className="w-5 h-5 text-gray-700" />
-                    <h2 className="font-bold text-gray-800 text-xl">
+                    <col.icon className="w-5 h-5 text-gray-700 dark:text-white/50" />
+                    <h2 className="font-bold text-gray-800 dark:text-white text-xl">
                       {col.title}
                     </h2>
                   </div>
@@ -33,26 +34,18 @@ export const MobileViewCard = ({ columns, onEdit }) => {
                 </div>
               </AccordionTrigger>
               <AccordionContent>
-                <div className="p-4 space-y-4 h-[300px] md:h-[600px] flex flex-col">
+                <div className="p-4 space-y-4 h-[350px] md:h-[600px] flex flex-col">
                   {col.tasks.length === 0 ? (
-                    <div className="text-center py-12 text-gray-500">
+                    <div className="text-center py-12 text-gray-500 dark:text-gray-400">
                       <div className="text-6xl mb-4">
-                        {col.key === "ongoing" && "📋"}
-                        {col.key === "success" && "🎉"}
-                        {col.key === "failure" && "😰"}
+                        {EMPTY_STATE_CONTENT[col.key].icon}
                       </div>
-                      <div>
-                        {col.key === "ongoing" && "No active tasks"}
-                        {col.key === "success" && "No completed tasks"}
-                        {col.key === "failure" && "No overdue tasks"}
-                      </div>
-                      <div className="text-xs text-gray-400 mt-2">
-                        {col.key === "ongoing" &&
-                          "Create a new task to get started"}
-                        {col.key === "success" &&
-                          "Complete some tasks to see them here"}
-                        {col.key === "failure" && "Great job staying on track!"}
-                      </div>
+                      <p className="text-lg font-medium">
+                        {EMPTY_STATE_CONTENT[col.key].title}
+                      </p>
+                      <p className="text-sm text-gray-400 mt-2">
+                        {EMPTY_STATE_CONTENT[col.key].message}
+                      </p>
                     </div>
                   ) : (
                     col.tasks.map((task) => (

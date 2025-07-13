@@ -92,35 +92,44 @@ export const TaskCard = ({
   };
 
   return (
-    <div className="bg-white rounded-lg border shadow-sm hover:shadow-md transition-shadow p-4">
+    <div className="bg-white dark:bg-zinc-900 rounded-lg border dark:border-zinc-700 shadow-sm hover:shadow-md transition-shadow p-4">
       <div className="flex items-start justify-between mb-2">
         <div className="flex items-center space-x-2 flex-1">
           {getStatusIcon()}
-          <h3 className="font-medium text-gray-900 text-sm line-clamp-1">
+          <h3 className="font-medium text-gray-900 dark:text-white text-sm line-clamp-1">
             {task.title}
           </h3>
         </div>
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="sm" className="h-6 w-6 p-0">
-              <MoreVertical className="w-4 h-4" />
+            <Button variant="ghost" size="sm" className="h-6 w-6 p-0 cursor-pointer">
+              <MoreVertical className="w-4 h-4  text-gray-600 dark:text-gray-300" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="bg-white">
+          <DropdownMenuContent
+            align="end"
+            className="bg-white dark:bg-zinc-800 border dark:border-zinc-700"
+          >
             {status !== "ongoing" && (
-              <DropdownMenuItem onClick={handleToggleComplete}>
+              <DropdownMenuItem
+                onClick={handleToggleComplete}
+                className="text-gray-800 dark:text-gray-100 "
+              >
                 <CheckCircle2 className="w-4 h-4 mr-2" />
                 {task.isCompleted ? "Mark Incomplete" : "Mark Complete"}
               </DropdownMenuItem>
             )}
-            <DropdownMenuItem onClick={() => onEdit(task)}>
+            <DropdownMenuItem
+              onClick={() => onEdit(task)}
+              className="text-gray-800 dark:text-gray-100"
+            >
               <Pencil className="w-4 h-4 mr-2" />
               Edit
             </DropdownMenuItem>
             <DropdownMenuItem
               onClick={handleDelete}
-              className="text-red-600 hover:text-red-700 hover:bg-red-50"
+              className="text-red-600 hover:text-red-700  hover:bg-red-50"
             >
               <Trash2 className="w-4 h-4 mr-2" />
               Delete
@@ -130,13 +139,13 @@ export const TaskCard = ({
       </div>
 
       {task.description && (
-        <p className="text-gray-600 text-xs mb-2 line-clamp-2">
+        <p className="text-gray-600 dark:text-gray-200 text-xs mb-2 line-clamp-2">
           {task.description}
         </p>
       )}
 
       <div className="flex items-center justify-between">
-        <div className="flex items-center space-x-1 text-xs text-gray-500">
+        <div className="flex items-center space-x-1 text-xs text-gray-500 dark:text-gray-400">
           <Calendar className="w-3 h-3" />
           <span>{format(new Date(task.deadline), "MMM d")}</span>
         </div>
@@ -152,7 +161,7 @@ export const TaskCard = ({
       {!task.isCompleted && (
         <Button
           onClick={handleToggleComplete}
-          className="w-full mt-3 h-7 text-xs bg-green-600 hover:bg-green-700"
+          className="w-full mt-3 h-7 text-xs cursor-pointer bg-green-600 hover:bg-green-700"
           size="sm"
         >
           Complete

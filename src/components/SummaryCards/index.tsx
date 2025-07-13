@@ -19,7 +19,7 @@ export const SummaryCards = ({ categorizedTasks, totalTask }) => {
                     {data.statusLength}
                   </p>
                 </div>
-                <div className="p-2 bg-orange-400/30 rounded-lg">
+                <div>
                   <Icon className="w-6 h-6" />
                 </div>
               </div>
