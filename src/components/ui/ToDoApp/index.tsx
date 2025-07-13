@@ -104,8 +104,17 @@ export const ToDoApp = () => {
           <div className="max-w-7xl mx-auto px-4 py-6">
             <div className="flex flex-col justify-between md:grid grid-cols-2 items-center  mb-6">
               <div>
-                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-indigo-600 dark:text-indigo-400 ">
-                  Smart Task Manager
+                <h1 className="text-2xl sm:text-3xl lg:text-5xl font-bold text-indigo-600 dark:text-indigo-400 ">
+                  <div
+                    className={`${
+                      isMobile ? " flex flex-col items-center" : ""
+                    }`}
+                  >
+                    <span>Smart Task</span>{" "}
+                    <span className={`${isMobile ? "flex flex-col" : ""}`}>
+                      Manager
+                    </span>
+                  </div>
                 </h1>
                 <p className="text-gray-600 mt-2 text-lg dark:text-gray-300">
                   Organize your tasks efficiently and stay productive
