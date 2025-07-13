@@ -17,6 +17,7 @@ import TaskCard from "../TaskCard";
 import useMobile from "@/hooks/useMobile";
 import MobileViewCard from "../MobileViewCard";
 import TaskForm from "@/components/TaskForm";
+import SummaryCards from "@/components/SummaryCards";
 
 export const ToDoApp = () => {
   const [showForm, setShowForm] = useState(false);
@@ -153,35 +154,14 @@ export const ToDoApp = () => {
             </div>
           </div>
 
-          <div className="bg-gradient-to-r from-indigo-500 to-purple-600 rounded-2xl shadow-lg p-6 text-white mb-6">
-            <h3 className="text-xl font-semibold mb-4">Task Overview</h3>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-              <div className="text-center">
-                <div className="text-3xl font-bold">{tasks.length}</div>
-                <div className="text-indigo-100 text-sm">Total Tasks</div>
-              </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-blue-200">
-                  {categorizedTasks.ongoing.length}
-                </div>
-                <div className="text-indigo-100 text-sm">Active</div>
-              </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-green-200">
-                  {categorizedTasks.success.length}
-                </div>
-                <div className="text-indigo-100 text-sm">Completed</div>
-              </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-red-200">
-                  {categorizedTasks.failure.length}
-                </div>
-                <div className="text-indigo-100 text-sm">Overdue</div>
-              </div>
-            </div>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 mb-4">
+            <SummaryCards
+              categorizedTasks={categorizedTasks}
+              totalTask={tasks.length}
+            />
           </div>
 
-          <div className="flex flex-col items-center sm:flex-row gap-4 mb-6">
+          <div className="flex flex-col justify-center md:items-center sm:flex-row gap-4 mb-6">
             <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
               <Input
