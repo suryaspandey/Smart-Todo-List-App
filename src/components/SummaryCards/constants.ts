@@ -1,31 +1,38 @@
-import { AlertTriangle, CheckCircle, Clock, TrendingUp } from "lucide-react";
+import {
+  AlertTriangle,
+  CheckCircle,
+  Clock,
+  ListChecks,
+} from "lucide-react";
 
-export const getSummaryData = (categorizedTasks, totalTask) => [
+export const getSummaryData = (categorizedTasks: any, totalTask: any) => [
   {
     status: "Overview",
     statusLength: totalTask,
-    icon: Clock,
-    headerBg: "bg-purple-500",
+    icon: ListChecks,
+    gradientBg: "from-purple-400 to-purple-600",
+    totalTask: totalTask,
   },
   {
-    status: "Active",
+    status: "To Do",
     statusLength: categorizedTasks?.ongoing?.length,
-    icon: TrendingUp,
+    icon: Clock,
     color: "border-t-blue-500 bg-blue-50/30",
-    headerBg: "bg-blue-500",
+    gradientBg: "from-blue-400 to-blue-600",
+    totalTask: totalTask,
   },
   {
     status: "Completed",
     statusLength: categorizedTasks?.success?.length,
     icon: CheckCircle,
-    color: "border-t-green-500 bg-green-50/30",
-    headerBg: "bg-green-500",
+    gradientBg: "from-green-400 to-green-600",
+    totalTask: totalTask,
   },
   {
     status: "Failure",
     statusLength: categorizedTasks?.failure?.length,
     icon: AlertTriangle,
-    color: "border-t-red-500 bg-red-50/30",
-    headerBg: "bg-red-500",
+    gradientBg: "from-red-400 to-red-600",
+    totalTask: totalTask,
   },
 ];

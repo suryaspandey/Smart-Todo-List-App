@@ -18,12 +18,20 @@ export const ToDoApp = () => {
   const [filterStatus, setFilterStatus] = useState("all");
   const [refreshFlag, setRefreshFlag] = useState(false);
   const [editingTask, setEditingTask] = useState(null);
+  const [showSummaryLoader, setShowSummaryLoader] = useState(true);
 
   const isMobile = useMobile();
 
   const { loading, tasks } = useTask();
 
   const { fetchTasks } = useTask();
+
+  useEffect(() => {
+    if (!loading) {
+      const timeout = setTimeout(() => setShowSummaryLoader(false), 200);
+      return () => clearTimeout(timeout);
+    }
+  }, [loading]);
 
   useEffect(() => {
     fetchTasks();
@@ -123,6 +131,7 @@ export const ToDoApp = () => {
               <SummaryCards
                 categorizedTasks={categorizedTasks}
                 totalTask={tasks.length}
+                isLoading={showSummaryLoader}
               />
             </div>
 
