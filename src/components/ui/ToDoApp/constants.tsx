@@ -38,7 +38,7 @@ export const EMPTY_STATE_CONTENT = {
     message: "Create a new task to get started",
   },
   success: {
-    icon: "🎉",
+    icon: "⏳",
     title: "No completed tasks",
     message: "Complete some tasks to see them here",
   },
