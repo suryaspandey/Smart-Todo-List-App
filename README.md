@@ -1,4 +1,4 @@
-# 🧠 Smart Todo App
+#  Smart Todo App
 
 A beautifully designed, responsive, and accessible **Task Manager** built with **React.js**, **TypeScript**, and **Supabase** as the backend.
 
@@ -23,7 +23,7 @@ A beautifully designed, responsive, and accessible **Task Manager** built with *
 
 ---
 
-## 🧠 Tech Stack
+## 🛠️ Tech Stack
 
 - **Frontend:** React + TypeScript
 - **Styling:** Tailwind CSS + ShadCN UI
@@ -57,7 +57,7 @@ src/
 ### 1. Clone the Repo
 
 
-git clone https://github.com/suryaspandey/smart-todo-app.git
+git clone [https://github.com/suryaspandey/smart-todo-app.git](https://github.com/suryaspandey/Smart-Todo-List-App)
 
 cd smart-todo-app
 
