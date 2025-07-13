@@ -33,7 +33,7 @@ export const MobileViewCard = ({
 }: MobileViewCardProps) => {
   return (
     <>
-      <Accordion type="multiple" className="space-y-4">
+      <Accordion type="single" collapsible className="space-y-4">
         {statusCardSection.map((col) => {
           return (
             <AccordionItem
@@ -57,7 +57,7 @@ export const MobileViewCard = ({
                 </div>
               </AccordionTrigger>
               <AccordionContent>
-                <div className="p-4 space-y-4 h-[350px] md:h-[600px] flex flex-col">
+                <div className="p-4 space-y-4 h-[350px] md:h-[600px] flex flex-col overflow-y-auto">
                   {col.tasks.length === 0 ? (
                     <div className="text-center py-12 text-gray-500 dark:text-gray-400">
                       <div className="text-6xl mb-4">

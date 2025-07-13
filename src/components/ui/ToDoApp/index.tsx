@@ -67,7 +67,7 @@ export const ToDoApp = () => {
   }, [tasks, refreshFlag]);
 
   const filteredTasks = useMemo(() => {
-    tasks.filter((task) => {
+    return tasks.filter((task) => {
       const matchesSearch =
         task.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         task.description.toLowerCase().includes(searchQuery.toLowerCase());
@@ -252,11 +252,11 @@ export const ToDoApp = () => {
               <div className="flex items-center space-x-3 mb-6">
                 <Filter className="w-6 h-6 text-gray-700 dark:text-white/50" />
                 <h2 className="text-2xl font-bold text-gray-800 dark:text-white">
-                  Filtered Results ({filteredTasks.length} tasks)
+                  Filtered Results ({filteredTasks?.length} tasks)
                 </h2>
               </div>
 
-              {filteredTasks.length === 0 ? (
+              {filteredTasks?.length === 0 ? (
                 <div className="text-center py-16 text-gray-500">
                   <div className="text-6xl mb-4">🔍</div>
                   <p className="text-xl font-medium">No tasks found</p>
@@ -266,7 +266,7 @@ export const ToDoApp = () => {
                 </div>
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 overflow-y-auto">
-                  {filteredTasks.map((task) => {
+                  {filteredTasks?.map((task: any) => {
                     const status = task.isCompleted
                       ? "success"
                       : new Date(task.deadline) <= new Date()

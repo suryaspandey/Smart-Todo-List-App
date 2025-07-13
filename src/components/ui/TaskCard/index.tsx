@@ -21,6 +21,7 @@ import { motion } from "framer-motion";
 
 import { formatDistanceToNow, isPast, format } from "date-fns";
 import { useTask } from "@/store/useTaskStore";
+import DeleteDialogBox from "@/components/DeleteDialogBox";
 
 export const TaskCard = ({
   task,
@@ -34,6 +35,7 @@ export const TaskCard = ({
   const { deleteTask, updateTask } = useTask();
 
   const [timeLeft, setTimeLeft] = useState("");
+  const [closeDialogBox, setCloseDilaogBox] = useState(false);
 
   useEffect(() => {
     const updateTime = () => {
@@ -109,7 +111,7 @@ export const TaskCard = ({
             </h3>
           </div>
 
-          <DropdownMenu>
+          <DropdownMenu open={closeDialogBox} onOpenChange={setCloseDilaogBox}>
             <DropdownMenuTrigger asChild>
               <Button
                 aria-label="View more options"
@@ -143,12 +145,23 @@ export const TaskCard = ({
                 Edit
               </DropdownMenuItem>
               <DropdownMenuItem
-                onClick={handleDelete}
                 aria-label="Delete task"
-                className="text-red-600 hover:text-red-700  hover:bg-red-50"
+                className="text-red-600 hover:text-red-700 hover:bg-red-50 focus:bg-red-100 focus:text-red-700"
+                asChild
               >
-                <Trash2 className="w-4 h-4 mr-2" />
-                Delete
+                <DeleteDialogBox
+                  taskId={task.id}
+                  onDelete={handleDelete}
+                  trigger={
+                    <div className="pl-2 flex items-center cursor-pointer w-full h-full">
+                      <Trash2 className="w-4 h-4 mr-2 text-red-600" />
+                      <span className="text-red-600 text-sm pl-2 hover:text-red-700">
+                        Delete
+                      </span>
+                    </div>
+                  }
+                  onCancel={() => setCloseDilaogBox(false)}
+                />
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
