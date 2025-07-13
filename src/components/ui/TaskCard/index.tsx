@@ -22,6 +22,7 @@ import { motion } from "framer-motion";
 import { formatDistanceToNow, isPast, format } from "date-fns";
 import { useTask } from "@/store/useTaskStore";
 import DeleteDialogBox from "@/components/DeleteDialogBox";
+import confetti from "canvas-confetti";
 
 export const TaskCard = ({
   task,
@@ -35,7 +36,7 @@ export const TaskCard = ({
   const { deleteTask, updateTask } = useTask();
 
   const [timeLeft, setTimeLeft] = useState("");
-  const [closeDialogBox, setCloseDilaogBox] = useState(false);
+  const [closeDialogBox, setCloseDialogBox] = useState(false);
 
   useEffect(() => {
     const updateTime = () => {
@@ -55,13 +56,23 @@ export const TaskCard = ({
     return () => clearInterval(interval);
   }, [task.deadline, task.isCompleted]);
 
-  const handleToggleComplete = async () => {
-    try {
-      await updateTask(task.id, { isCompleted: !task.isCompleted });
+  const fireConfetti = () => {
+    confetti({
+      particleCount: 100,
+      spread: 70,
+      origin: { y: 0.6 },
+    });
+  };
 
+  const handleToggleComplete = async () => {
+    const newStatus = !task.isCompleted;
+    try {
+      await updateTask(task.id, { isCompleted: newStatus });
       toast.success(
-        task.isCompleted ? "Task marked as incomplete" : "Task completed!"
+        newStatus ? "Task completed!" : "Task marked as incomplete"
       );
+
+      if (newStatus) fireConfetti();
     } catch (error: string) {
       toast.error(error);
     }
@@ -111,7 +122,7 @@ export const TaskCard = ({
             </h3>
           </div>
 
-          <DropdownMenu open={closeDialogBox} onOpenChange={setCloseDilaogBox}>
+          <DropdownMenu open={closeDialogBox} onOpenChange={setCloseDialogBox}>
             <DropdownMenuTrigger asChild>
               <Button
                 aria-label="View more options"
@@ -160,7 +171,7 @@ export const TaskCard = ({
                       </span>
                     </div>
                   }
-                  onCancel={() => setCloseDilaogBox(false)}
+                  onCancel={() => setCloseDialogBox(false)}
                 />
               </DropdownMenuItem>
             </DropdownMenuContent>

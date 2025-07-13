@@ -74,7 +74,9 @@ export const TaskForm = React.memo(
         <Dialog open={open} onOpenChange={onClose}>
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>Create a New Task</DialogTitle>
+              <DialogTitle>
+                {isEdit ? "Edit Task" : "Create a New Task "}
+              </DialogTitle>
               <DialogClose asChild>
                 <Button
                   aria-label="Close form"
