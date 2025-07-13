@@ -1,11 +1,6 @@
 import { useTask } from "@/store/useTaskStore";
 import { useEffect, useMemo, useState } from "react";
-import {
-  Filter,
-  Plus,
-  Search,
-  XCircle,
-} from "lucide-react";
+import { Filter, Plus, Search, XCircle } from "lucide-react";
 import { SelectValue } from "@radix-ui/react-select";
 import { Select, SelectContent, SelectItem, SelectTrigger } from "../select";
 import { Button } from "../button";
@@ -46,7 +41,7 @@ export const ToDoApp = () => {
     //
   }, [refreshFlag]);
 
-  const editTask = (task) => {
+  const editTask = (task: any) => {
     setEditingTask(task);
     setShowForm(true);
   };
@@ -63,19 +58,23 @@ export const ToDoApp = () => {
     };
   }, [tasks, refreshFlag]);
 
-  const filteredTasks = tasks.filter((task) => {
-    const matchesSearch =
-      task.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      task.description.toLowerCase().includes(searchQuery.toLowerCase());
+  const filteredTasks = useMemo(() => {
+    tasks.filter((task) => {
+      const matchesSearch =
+        task.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        task.description.toLowerCase().includes(searchQuery.toLowerCase());
 
-    const status = task.isCompleted
-      ? "success"
-      : new Date(task.deadline) <= new Date()
-      ? "failure"
-      : "ongoing";
+      const status = task.isCompleted
+        ? "success"
+        : new Date(task.deadline) <= new Date()
+        ? "failure"
+        : "ongoing";
 
-    return matchesSearch && (filterStatus === "all" || filterStatus === status);
-  });
+      return (
+        matchesSearch && (filterStatus === "all" || filterStatus === status)
+      );
+    });
+  }, [searchQuery, filterStatus, tasks]);
 
   const statusCardSection = getColumns(categorizedTasks);
 
@@ -92,7 +91,7 @@ export const ToDoApp = () => {
 
   return (
     <>
-      <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-100 dark:from-zinc-700 dark:via-zinc-800 dark:to-zinc-900">
+      <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-100 dark:from-zinc-700 dark:via-zinc-800 dark:to-zinc-900 ">
         <div className="bg-white dark:bg-zinc-900 shadow-sm border-b">
           <div className="max-w-7xl mx-auto px-4 py-6">
             <div className="flex flex-col justify-between md:grid grid-cols-2 items-center  mb-6">
@@ -178,7 +177,10 @@ export const ToDoApp = () => {
           {filterStatus === "all" && searchQuery.trim() === "" ? (
             isMobile ? (
               <>
-                <MobileViewCard statusCardSection={statusCardSection} onEdit={editTask} />
+                <MobileViewCard
+                  statusCardSection={statusCardSection}
+                  onEdit={editTask}
+                />
               </>
             ) : (
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">

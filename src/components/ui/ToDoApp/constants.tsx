@@ -1,7 +1,7 @@
 import { AlertTriangleIcon, CheckCircleIcon, ClockIcon } from "lucide-react";
 
 export const REQUIRED_FIELD = "This field is required.";
-export const getColumns = (categorizedTasks) => [
+export const getColumns = (categorizedTasks: any) => [
   {
     key: "ongoing",
     title: "To Do",

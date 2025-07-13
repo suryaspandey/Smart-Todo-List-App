@@ -1,7 +1,26 @@
 import { Card, CardContent } from "../ui/card";
 import { getSummaryData } from "./constants";
 
-export const SummaryCards = ({ categorizedTasks, totalTask }) => {
+interface Task {
+  id: string;
+  title: string;
+  description?: string;
+  deadline: string;
+  isCompleted: boolean;
+}
+interface TaskSummaryProps {
+  totalTask: number;
+  categorizedTasks: {
+    ongoing: Task[];
+    success: Task[];
+    failure: Task[];
+  };
+}
+
+export const SummaryCards = ({
+  categorizedTasks,
+  totalTask,
+}: TaskSummaryProps) => {
   const summaryData = getSummaryData(categorizedTasks, totalTask);
   return (
     <>

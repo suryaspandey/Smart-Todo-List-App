@@ -1,3 +1,4 @@
+import type { LucideIcon } from "lucide-react";
 import {
   Accordion,
   AccordionContent,
@@ -6,8 +7,30 @@ import {
 } from "../accordion";
 import TaskCard from "../TaskCard";
 import { EMPTY_STATE_CONTENT } from "../ToDoApp/constants";
-
-export const MobileViewCard = ({ statusCardSection, onEdit }: any) => {
+interface Task {
+  id: string;
+  title: string;
+  description?: string;
+  deadline: string;
+  isCompleted: boolean;
+}
+interface StatusCard {
+  key: string;
+  title: string;
+  icon: LucideIcon;
+  color: string;
+  headerBg: string;
+  count: number;
+  tasks: Task[];
+}
+interface MobileViewCardProps {
+  onEdit: (task: Task) => void;
+  statusCardSection: StatusCard[];
+}
+export const MobileViewCard = ({
+  statusCardSection,
+  onEdit,
+}: MobileViewCardProps) => {
   return (
     <>
       <Accordion type="multiple" className="space-y-4">
