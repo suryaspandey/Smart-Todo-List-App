@@ -226,7 +226,7 @@ export const ToDoApp = () => {
                       </div>
                     </div>
 
-                    <div className="p-4 space-y-4 h-[300px] md:h-[600px] flex flex-col">
+                    <div className="p-4 space-y-4 h-[180px] md:h-[400px] flex flex-col">
                       {column.tasks.length === 0 ? (
                         <div className="text-center py-12 text-gray-500 dark:text-gray-400">
                           <div className="text-6xl mb-4">
