@@ -103,7 +103,12 @@ export const TaskCard = ({
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="sm" className="h-6 w-6 p-0 cursor-pointer">
+            <Button
+              aria-label="View more options"
+              variant="ghost"
+              size="sm"
+              className="h-6 w-6 p-0 cursor-pointer"
+            >
               <MoreVertical className="w-4 h-4  text-gray-600 dark:text-gray-300" />
             </Button>
           </DropdownMenuTrigger>
@@ -114,6 +119,7 @@ export const TaskCard = ({
             {status !== "ongoing" && (
               <DropdownMenuItem
                 onClick={handleToggleComplete}
+                aria-label="Mark task as complete/incomplete"
                 className="text-gray-800 dark:text-gray-100 "
               >
                 <CheckCircle2 className="w-4 h-4 mr-2" />
@@ -122,6 +128,7 @@ export const TaskCard = ({
             )}
             <DropdownMenuItem
               onClick={() => onEdit(task)}
+              aria-label="Edit task"
               className="text-gray-800 dark:text-gray-100"
             >
               <Pencil className="w-4 h-4 mr-2" />
@@ -129,6 +136,7 @@ export const TaskCard = ({
             </DropdownMenuItem>
             <DropdownMenuItem
               onClick={handleDelete}
+              aria-label="Delete task"
               className="text-red-600 hover:text-red-700  hover:bg-red-50"
             >
               <Trash2 className="w-4 h-4 mr-2" />
@@ -160,6 +168,7 @@ export const TaskCard = ({
 
       {!task.isCompleted && (
         <Button
+          aria-label="Mark task as complete"
           onClick={handleToggleComplete}
           className="w-full mt-3 h-7 text-xs cursor-pointer bg-green-600 hover:bg-green-700"
           size="sm"

@@ -108,6 +108,7 @@ export const ToDoApp = () => {
               ) : (
                 <div className="flex place-content-around">
                   <Button
+                    aria-label="Add new task"
                     onClick={() => setShowForm(!showForm)}
                     className="bg-indigo-600 hover:bg-indigo-700 text-white border border-indigo-700 dark:border-indigo-400 dark:hover:bg-indigo-500 px-6 py-3 text-lg rounded-md cursor-pointer"
                   >
@@ -129,6 +130,7 @@ export const ToDoApp = () => {
               <div className="relative flex-1">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                 <Input
+                  aria-label="Search tasks"
                   placeholder={`${
                     isMobile
                       ? "Search tasks "
@@ -139,6 +141,7 @@ export const ToDoApp = () => {
                   className="pl-10 h-12 text-lg border-2 border-gray-200 focus:border-indigo-500 dark:border-zinc-700 dark:bg-zinc-900 dark:text-white"
                 />
                 <XCircle
+                  aria-label="Cancel all search"
                   className="w-5 h-5 mr-2 text-gray-600 dark:text-white/50 cursor-pointer absolute right-3 top-1/2 transform -translate-y-1/2"
                   onClick={() => {
                     setSearchQuery("");

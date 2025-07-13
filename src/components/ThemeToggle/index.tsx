@@ -17,6 +17,7 @@ export const ThemeToggle = () => {
       } mr-2 sm:mr-4`}
     >
       <Button
+        aria-label="Toggle light/dark theme"
         onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
         className="p-2 bg-gray-600 dark:bg-gray-200 rounded cursor-pointer"
       >

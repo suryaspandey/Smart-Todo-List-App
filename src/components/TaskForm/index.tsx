@@ -77,6 +77,7 @@ export const TaskForm = React.memo(
               <DialogTitle>Create a New Task</DialogTitle>
               <DialogClose asChild>
                 <Button
+                  aria-label="Close form"
                   type="button"
                   className="absolute right-4 top-4 text-gray-200 bg-white dark:bg-black dark:hover:bg-white dark:text-white dark:hover:text-black"
                 >
@@ -138,7 +139,11 @@ export const TaskForm = React.memo(
                 </div>
 
                 <div className="flex justify-end">
-                  <Button type="submit" className="cursor-pointer">
+                  <Button
+                    type="submit"
+                    className="cursor-pointer"
+                    aria-label="Submit form"
+                  >
                     {isEdit ? "Edit Task" : "Create Task"}
                   </Button>
                 </div>
