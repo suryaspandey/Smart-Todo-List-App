@@ -55,18 +55,16 @@ export const SummaryCards = ({
                   className={`bg-gradient-to-br ${data.gradientBg} text-white border-0`}
                 >
                   <CardContent className="p-4 sm:p-6">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="text-orange-100 text-lg font-medium">
-                          {data.status.toUpperCase()}
-                        </p>
-                        <p className="text-2xl sm:text-3xl font-bold drop-shadow-sm">
-                          {data.statusLength}
+                    <div className="flex flex-col items-center gap-1">
+                      <div className="flex items-center gap-2">
+                        <Icon className="w-5 h-5 text-white" />
+                        <p className="text-white font-semibold uppercase text-sm">
+                          {data.status}
                         </p>
                       </div>
-                      <div className="bg-white/10 p-3 rounded-full">
-                        <Icon className="w-6 h-6 text-white" />
-                      </div>
+                      <p className="text-3xl font-bold text-white text-center w-full">
+                        {data.statusLength}
+                      </p>
                     </div>
                   </CardContent>
                 </Card>
